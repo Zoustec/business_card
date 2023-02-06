@@ -1,0 +1,103 @@
+<html>
+
+<head>
+  <title>茁思科技</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
+  <link rel=stylesheet type="text/css" href="css/style.css">
+  <script src="js/app.js"></script>
+</head>
+
+<body>
+  <div class="example-container">
+    <div id="example-scanning-overlay" class="hidden">
+      <div class="inner">
+        <img src="Image/card.png" />
+        <div class="scanline"></div>
+      </div>
+    </div>
+
+    <a-scene
+      mindar-image="imageTargetSrc: data/marker/targets.mind; showStats: false; uiScanning: #example-scanning-overlay;filterMinCF:0.0005; filterBeta: 0.0001"
+      embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false">
+      <a-assets>
+        <img id="card" src="Image/card.png" />
+        <img id="icon-play" src="Image/icon_play.png" />
+        <img id="icon-left" src="Image/icon_left.png" />
+        <img id="icon-right" src="Image/icon_right.png" />
+        <img id="ar-game-banner" src="Image/ar_game_banner.png" />
+        <img id="vr-game-banner" src="Image/vr_game_banner.png" />
+        <img id="panorama-banner" src="Image/panorama_banner.png" />
+        <img id="ar-game-preview" src="Image/ar_game_preview.JPG" />
+        <img id="vr-game-preview" src="Image/vr_game_preview.jpg" />
+        <img id="panorama-preview" src="Image/panorama_preview.png" />
+        <a-asset-item id="avatarModel" src="Model/glb/Zoustec_Logo.glb" />
+        <a-asset-item id="icon-web" src="Model/glb/Website_btn.glb" />
+        <a-asset-item id="icon-phone" src="Model/glb/Phone_btn.glb" />
+        <a-asset-item id="icon-email" src="Model/glb/Email_btn.glb" />
+      </a-assets>
+
+      <a-camera position="0 0 2" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+        raycaster="far: 10000; objects: .clickable">
+      </a-camera>
+
+      <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0">
+        <a-plane src="#card" visible="false" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+
+        <a-entity visible=false id="portfolio-panel" position="0 1 0" rotation="45 0 0">
+          <a-entity id="portfolio-cylinder">
+            <a-entity id="portfolio-item0" position="0 0 0.5" rotation="0 0 0">
+              <a-image src="#vr-game-banner" width="1" height="0.4453125" position="0 0.62 0" rotation="0 0 0" scale="0.4 0.4 0.4" alpha-test="0.5"></a-image>
+              <a-image src="#vr-game-preview" width="1" height="0.5" position="0 0 0" rotation="0 0 0" scale="1 1 1">
+                <a-image id="play-video-button0" src="#icon-play" width="0.2" height="0.2" alpha-test="0.5" position="0 0 0.01" class="clickable"></a-image>
+              </a-image>
+            </a-entity>
+            <a-entity id="portfolio-item1" position="-0.433 0 -0.25" rotation="0 240 0">
+              <a-image src="#ar-game-banner" width="1" height="0.4453125" position="0 0.62 0" rotation="0 0 0" scale="0.4 0.4 0.4" alpha-test="0.5"></a-image>
+              <a-image src="#ar-game-preview" width="1" height="0.9699" position="0 0 0" rotation="0 0 0" scale="1 1 1">
+                <a-image id="play-video-button1" src="#icon-play" width="0.2" height="0.2" alpha-test="0.5" position="0 0 0.01" class="clickable"></a-image>
+              </a-image>
+            </a-entity>
+            <a-entity id="portfolio-item2" position="0.433 0 -0.25" rotation="0 120 0">
+              <a-image src="#panorama-banner" width="1" height="0.4453125" position="0 0.62 0" rotation="0 0 0" scale="0.4 0.4 0.4" alpha-test="0.5"></a-image>
+              <a-image src="#panorama-preview" width="1" height="0.562" position="0 0 0" rotation="0 0 0" scale="1 1 1">
+                <a-image id="play-video-button2" src="#icon-play" width="0.2" height="0.2" alpha-test="0.5" position="0 0 0.01" class="clickable"></a-image>
+              </a-image>
+            </a-entity>
+          </a-entity>
+          <a-image id="portfolio-left-button" class="clickable" src="#icon-left" position="-0.7 0 0.5" height="0.15" width="0.15" alpha-test="0.5"></a-image>
+          <a-image id="portfolio-right-button" class="clickable" src="#icon-right" position="0.7 0 0.5" height="0.15" width="0.15" alpha-test="0.5"></a-image>
+        </a-entity>
+
+        <a-gltf-model visible=false id="web-button" class="clickable" material="transparent: true;" src="#icon-web" position="-0.4 -0.6 0" 
+          animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+        </a-gltf-model>
+
+        <a-gltf-model visible=false id="email-button" class="clickable" src="#icon-email" position="0 -0.6 0"
+          animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+        </a-gltf-model>
+
+        <a-gltf-model visible=false id="phone-button" class="clickable" src="#icon-phone" position="0.4 -0.6 0"
+          animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+        </a-gltf-model>
+
+        <a-gltf-model visible=false id="avatar" rotation="0 90 90" position="0 0 0.3" scale="0.4 0.4 0.4" src="#avatarModel"
+          animation="property: object3D.rotation.x; to: 360; loop: true; easing: linear; dur: 5000">
+        </a-gltf-model>
+        <!--
+        <a-text id="text" class="clickable" value="測試字體" color="black" align="center" width="2" position="0 -1 0"
+          geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.5"></a-text>
+        -->
+      </a-entity>
+    </a-scene>
+  </div>
+  <div id="videoDialog" style="position: absolute; background-color: black; width: 100%; height: 100%; z-index:10; display: none;">
+    <video style="height: 100%; width: 100%" preload="none" controls></video>
+    <div style="position: absolute; background-image: url('Image/icon_close.png'); background-size: cover; width: 3rem; height: 3rem; top: 0; right: 0; z-index:20;" onclick="hideVideo();"></div>
+  </div>
+</body>
+
+</html>
