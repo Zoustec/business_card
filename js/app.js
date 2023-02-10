@@ -1,5 +1,4 @@
 const setEventListener = () => {
-    console.log("fff");
     const webButton = document.querySelector("#web-button");
     webButton.addEventListener("click", function (evt) {
         window.location.href = "https://zoustec.com/";
@@ -15,15 +14,21 @@ const setEventListener = () => {
         window.location.href = "tel:+886229650060";
     });
 
+    const shareButton = document.querySelector("#share-button");
+    shareButton.addEventListener("click", function (evt) {
+        FB.ui({
+            method: 'share',
+            href: 'https://zoustec.com/'
+          }, function(response){});
+    });
+
     const portfolioLeftButton = document.querySelector("#portfolio-left-button");
     portfolioLeftButton.addEventListener("click", () => {
-        console.log("portfolioLeftButton");
         turnCylinder(1);
     });
 
     const portfolioRightButton = document.querySelector("#portfolio-right-button");
     portfolioRightButton.addEventListener("click", () => {
-        console.log("portfolioRightButton");
         turnCylinder(-1);
     });
 
@@ -39,12 +44,29 @@ const setEventListener = () => {
     playVideoButtons[2].addEventListener("click", () => {
         showVideo("Videos/panorama.mp4");
     });
+
+    document.addEventListener("keydown", (event) => {
+        hideVideo();
+    });
+
+    window.addEventListener("hashchange", function(e) {
+        if(e.oldURL.endsWith("#video") && e.oldURL.length > e.newURL.length) {
+            hideVideo();
+        }
+        else
+        {
+            if (e.newURL.endsWith("#video")) {
+                showVideo();
+            }
+        }
+    });
 };
 
 const showInfo = () => {
     const webButton = document.querySelector("#web-button");
     const emailButton = document.querySelector("#email-button");
     const phontButton = document.querySelector("#phone-button");
+    const shareButton = document.querySelector("#share-button");
 
     setTimeout(() => {
         webButton.setAttribute("visible", true);
@@ -55,6 +77,9 @@ const showInfo = () => {
     setTimeout(() => {
         phontButton.setAttribute("visible", true);
     }, 900);
+    setTimeout(() => {
+        shareButton.setAttribute("visible", true);
+    }, 1200);
 };
 
 let autoTurn = null;
@@ -75,7 +100,6 @@ const doAutoTurn = () => {
     }
 
     autoTurn = setTimeout(() => {
-        console.log("autoturn");
         turnCylinder(1);
     }, 5000);
 };
@@ -103,11 +127,9 @@ const turnCylinder = (value) => {
     currentItem = currentItem + value;
     const endRotation = currentItem * 120;
     currentItem = (currentItem + 3) % 3;
-    console.log(currentItem);
     let alpha = 0;
 
     const id = setInterval(() => {
-
         if (alpha < 1) {
             alpha += 0.01;
         }
@@ -135,26 +157,37 @@ const showAvatar = (onDone) => {
 };
 
 const showVideo = (src) => {
+    window.location.hash = "video";
     const videoDialog = document.querySelector("#videoDialog");
     const video = videoDialog.querySelector("video");
     videoDialog.style.display = "block";
-    video.src = src;
+    if (src) {
+        video.src = src;
+    }
+    
     video.play();
 };
 
 const hideVideo = () => {
     const videoDialog = document.querySelector("#videoDialog");
-    const video = videoDialog.querySelector("video");
-    if (video.played)
-        video.pause();
 
-    videoDialog.style.display = "none";
+    if (videoDialog.style.display != "none")
+    {
+        const video = videoDialog.querySelector("video");
+        if (video.played)
+            video.pause();
+
+        videoDialog.style.display = "none";
+        window.location.hash = "";
+    }
 };
 
 AFRAME.registerComponent("mytarget", {
     init: function () {
         this.el.addEventListener("targetFound", (event) => {
             //console.log("target found");
+            const myTarget = document.querySelector("#mytarget");
+            myTarget.setAttribute("visible", true);
             showAvatar(() => {
                 setTimeout(() => {
                     showPortfolio(() => {
@@ -173,17 +206,34 @@ AFRAME.registerComponent("mytarget", {
 
 window.addEventListener("load", (event) => {
     setEventListener();
-});
-/*
-setTimeout(() => {
-    showAvatar(() => {
+
+    let urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has("noar")) {
+        console.log("ar");
+        const sceneEl = document.querySelector('a-scene');
+        const arSystem = sceneEl.systems["mindar-image-system"];
+        arSystem.start();
+    }
+    else {
+        console.log("no ar");
+
+        const myTarget = document.querySelector("#mytarget");
+        myTarget.setAttribute("visible", true);
+
+        const camera = document.querySelector("#camera");
+        camera.setAttribute("position", "0 -1 2");        
+        camera.setAttribute("rotation", "30 0 0");
+
         setTimeout(() => {
-            showPortfolio(() => {
+            showAvatar(() => {
                 setTimeout(() => {
-                    showInfo();
+                    showPortfolio(() => {
+                        setTimeout(() => {
+                            showInfo();
+                        }, 300);
+                    });
                 }, 300);
             });
-        }, 300);
-    });
-}, 2000)
-*/
+        }, 1000);
+    };
+});

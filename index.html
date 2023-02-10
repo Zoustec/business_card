@@ -1,8 +1,13 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="zh-tw">
 <head>
   <title>茁思科技</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" sizes="192x192" href="Image/favicon.png">
+  <link rel="shortcut icon" href="Image/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="Image/favicon.png" type="image/png">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
@@ -20,7 +25,7 @@
     </div>
 
     <a-scene
-      mindar-image="imageTargetSrc: data/marker/targets.mind; showStats: false; uiScanning: #example-scanning-overlay;filterMinCF:0.0005; filterBeta: 0.0001"
+      mindar-image="imageTargetSrc: data/marker/targets.mind; showStats: false; uiScanning: #example-scanning-overlay;filterMinCF:0.00075; filterBeta: 0.0001; autoStart: false"
       embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false">
       <a-assets>
@@ -36,11 +41,12 @@
         <img id="panorama-preview" src="Image/panorama_preview.png" />
         <a-asset-item id="avatarModel" src="Model/glb/Zoustec_Logo.glb" />
         <a-asset-item id="icon-web" src="Model/glb/Website_btn.glb" />
-        <a-asset-item id="icon-phone" src="Model/glb/Phone_btn.glb" />
         <a-asset-item id="icon-email" src="Model/glb/Email_btn.glb" />
+        <a-asset-item id="icon-phone" src="Model/glb/Phone_btn.glb" />
+        <a-asset-item id="icon-share" src="Model/glb/Share_btn.glb" />
       </a-assets>
 
-      <a-camera position="0 0 2" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+      <a-camera id="camera" position="0 0 0" rotation="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
         raycaster="far: 10000; objects: .clickable">
       </a-camera>
 
@@ -72,15 +78,19 @@
           <a-image id="portfolio-right-button" class="clickable" src="#icon-right" position="0.7 0 0.5" height="0.15" width="0.15" alpha-test="0.5"></a-image>
         </a-entity>
 
-        <a-gltf-model visible=false id="web-button" class="clickable" material="transparent: true;" src="#icon-web" position="-0.4 -0.6 0" 
+        <a-gltf-model visible=false id="web-button" class="clickable" src="#icon-web" position="-0.6 -0.6 0" 
           animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
         </a-gltf-model>
 
-        <a-gltf-model visible=false id="email-button" class="clickable" src="#icon-email" position="0 -0.6 0"
+        <a-gltf-model visible=false id="email-button" class="clickable" src="#icon-email" position="-0.2 -0.6 0"
           animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
         </a-gltf-model>
 
-        <a-gltf-model visible=false id="phone-button" class="clickable" src="#icon-phone" position="0.4 -0.6 0"
+        <a-gltf-model visible=false id="phone-button" class="clickable" src="#icon-phone" position="0.2 -0.6 0"
+          animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+        </a-gltf-model>
+
+        <a-gltf-model visible=false id="share-button" class="clickable" src="#icon-share" position="0.6 -0.6 0"
           animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
         </a-gltf-model>
 
@@ -95,9 +105,20 @@
     </a-scene>
   </div>
   <div id="videoDialog" style="position: absolute; background-color: black; width: 100%; height: 100%; z-index:10; display: none;">
-    <video style="height: 100%; width: 100%" preload="none" controls></video>
-    <div style="position: absolute; background-image: url('Image/icon_close.png'); background-size: cover; width: 3rem; height: 3rem; top: 0; right: 0; z-index:20;" onclick="hideVideo();"></div>
+    <video style="position: absolute; height: 100%; width: 100%" preload="none" controls></video>
+    <div style="position: absolute; background-image: url('Image/icon_close.png'); background-size: cover; width: 3rem; height: 3rem; top: 0; right: 0; z-index:20; cursor: pointer;" onclick="hideVideo();"></div>
   </div>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : '588734566092333',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v16.0'
+      });
+    };
+  </script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 </body>
 
 </html>
