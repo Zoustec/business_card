@@ -58,10 +58,14 @@
       display: none;
   }
 
-  #example-scanning-overlay img {
-      opacity: 0.6;
-      width: 90%;
-      align-self: center;
+  #card-image {
+    background-image: url(../Image/card.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: 0.6;
+    width: 80%;
+    height: 80%;
   }
 
   #example-scanning-overlay .inner .scanline {
