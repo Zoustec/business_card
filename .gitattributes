@@ -1,4 +1,6 @@
 *.glb filter=lfs diff=lfs merge=lfs -text
 *.[Mm][Pp]4 filter=lfs diff=lfs merge=lfs -text
+Videos/ar_game.mp4 -filter -diff -merge -text
+Videos/panorama.mp4 -filter -diff -merge -text
 Videos/vr_game.mp4 -filter -diff -merge -text
 *.[Mm][Oo][Vv] filter=lfs diff=lfs merge=lfs -text
