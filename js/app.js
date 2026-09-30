@@ -206,13 +206,16 @@ AFRAME.registerComponent("mytarget", {
 
 window.addEventListener("load", (event) => {
     setEventListener();
-
+/*
     let urlParams = new URLSearchParams(window.location.search);
     if (!urlParams.has("noar")) {
         console.log("ar");
         const sceneEl = document.querySelector('a-scene');
-        const arSystem = sceneEl.systems["mindar-image-system"];
-        arSystem.start();
+		if (sceneEl) {
+			const arSystem = sceneEl.systems["mindar-image-system"];
+			if (arSystem && typeof arSystem !== "undefined")
+				arSystem.start();
+		}
     }
     else {
         console.log("no ar");
@@ -235,5 +238,5 @@ window.addEventListener("load", (event) => {
                 }, 300);
             });
         }, 1000);
-    };
+    };*/
 });

@@ -3,7 +3,7 @@
 <head>
   <title>茁思科技</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=no" />
   <link rel="icon" sizes="192x192" href="Image/favicon.png">
   <link rel="shortcut icon" href="Image/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="Image/favicon.png" type="image/png">
@@ -20,13 +20,13 @@
   <div class="example-container">
     <div id="example-scanning-overlay" class="hidden">
       <div class="inner">
-        <div id="card-image"></div>>
+        <div id="card-image"></div>
         <div class="scanline"></div>
       </div>
     </div>
 
     <a-scene
-      mindar-image="imageTargetSrc: data/marker/targets.mind; showStats: false; uiScanning: #example-scanning-overlay;filterMinCF:0.00075; filterBeta: 0.0001; autoStart: false"
+      mindar-image="imageTargetSrc: data/marker/targets.mind; showStats: false; uiScanning: #example-scanning-overlay;filterMinCF:0.0001; filterBeta: 0.0001; autoStart: true"
       embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false">
       <a-assets>
